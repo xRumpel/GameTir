@@ -22,6 +22,16 @@ target_y = random.randint(0, SCREEN_HEIGHT - target_height)
 
 color = random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)
 
+# Добавление переменной для подсчета очков
+score = 0
+
+# Добавление шрифта для текста
+font = pygame.font.Font(None, 36)
+
+# Функция для отображения счета
+def show_score(x, y):
+    score_text = font.render("Score: " + str(score), True, (255, 255, 255))
+    screen.blit(score_text, (x, y))
 
 
 #Игровой цикл
@@ -36,8 +46,20 @@ while running:
             if target_x < mouse_x < target_x + target_width and target_y < mouse_y < target_y + target_height:
                 target_x = random.randint(0, SCREEN_WIDTH - target_width)
                 target_y = random.randint(0, SCREEN_HEIGHT - target_height)
+            score += 1  # Увеличиваем счет на 1
 
+        # Обновляем положение мишени для ее движения (можно добавить условия для изменения направления движения)
+    target_x += random.randint(-5, 5)
+    target_y += random.randint(-5, 5)
+
+        # Проверка выхода мишени за пределы экрана и корректировка положения
+    if target_x < 0 or target_x > SCREEN_WIDTH - target_width:
+        target_x = random.randint(0, SCREEN_WIDTH - target_width)
+    if target_y < 0 or target_y > SCREEN_HEIGHT - target_height:
+        target_y = random.randint(0, SCREEN_HEIGHT - target_height)
     screen.blit(target_image, (target_x, target_y))
+# Отображаем счет
+    show_score(10, 10)
 
 
     #Обновление экрана
